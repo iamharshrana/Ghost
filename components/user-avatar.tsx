@@ -11,7 +11,7 @@ import {
 const avatarSize= cva(
     "",
     {
-        variants:{
+        variants: {
             size:{
                 default:"h-8 w-8",
                 lg: "h-14 w-14"
@@ -24,7 +24,8 @@ const avatarSize= cva(
 )
 
 
-interface UserAvatarProps{
+interface UserAvatarProps
+    extends VariantProps<typeof avatarSize> {
     username: string;
     imageUrl: string;
     isLive?: boolean;
@@ -32,11 +33,24 @@ interface UserAvatarProps{
 };
 
 export const UserAvatar = ({
+    username,
+    imageUrl,
+    isLive,
+    showBadge,
+    size,
 
 }: UserAvatarProps) => {
+    const canShowBadge = showBadge && isLive;
+
     return(
-        <div>
-            UserAvatar
+        <div className="relative">
+            <Avatar
+                className={cn(
+                    isLive && "ring-2 ring-rose-500 border border-background "
+                )}
+            >
+                <AvatarImage src={imageUrl} className="object-cover" />
+            </Avatar>
         </div>
     )
 }
